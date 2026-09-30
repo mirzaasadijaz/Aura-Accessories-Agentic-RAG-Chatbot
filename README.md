@@ -1,10 +1,10 @@
 # Aura Accessories – Agentic RAG Chatbot
 
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-mirzaasadijaz%2Fai--email--dispatcher-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/mirzaasadijaz/ai-email-dispatcher)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-mirzaasadijaz%2Fenterprise--ai--agent-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/mirzaasadijaz/enterprise-ai-agent/)
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![LangGraph](https://img.shields.io/badge/LangGraph-agent-1C3C3C)
-
+https://hub.docker.com/repository/docker/mirzaasadijaz/enterprise-ai-agent/general
 An AI shopping assistant for **The Aura Accessories**, a luxury fashion brand (handbags, footwear, watches, jewelry). It is an agentic RAG system: a LangGraph ReAct agent powered by Groq decides whether to answer directly, search your uploaded internal documents (ChromaDB), or search the live web (Tavily). Every visitor gets their own persistent conversation memory.
 
 ## Table of Contents
