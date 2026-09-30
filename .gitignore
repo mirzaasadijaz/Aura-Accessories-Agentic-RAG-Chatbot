@@ -1,0 +1,49 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Databases & vector store (generated at runtime)
+chroma_db/
+chat_memory.db
+chat_memory.db-shm
+chat_memory.db-wal
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+
+# Temporary upload files
+temp_*
+
+# Model caches
+.cache/
+huggingface/
+
+# Logs
+*.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db

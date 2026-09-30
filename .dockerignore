@@ -1,0 +1,15 @@
+# Secret Keys
+.env
+
+# Databases & Storage
+*.db
+chat_memory.db
+chroma_db/
+
+# Temporary Upload Files
+temp_*
+
+# Python & Virtual Environments
+__pycache__/
+venv/
+env/

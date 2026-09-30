@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Upload Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Upload Data</h1>
+            <p class="text-sm text-gray-500 mt-2">PDF, DOCX, CSV, ya TXT files yahan se upload karein.</p>
+        </div>
+
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-blue-500 transition-colors bg-gray-50">
+            <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.csv,.txt,.md" onchange="updateFileName()">
+            <label for="fileInput" class="cursor-pointer flex flex-col items-center justify-center">
+                <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <span id="fileName" class="text-sm font-medium text-blue-600 bg-blue-50 px-4 py-2 rounded-full">Click to Select File</span>
+            </label>
+        </div>
+
+        <button onclick="uploadFile()" id="uploadBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-md">
+            Upload to AI
+        </button>
+
+        <!-- Status Message Box -->
+        <div id="statusBox" class="mt-4 text-center text-sm font-medium hidden p-3 rounded-lg"></div>
+    </div>
+
+    <script>
+        function updateFileName() {
+            const input = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('fileName');
+            if (input.files.length > 0) {
+                fileNameDisplay.textContent = input.files[0].name;
+            }
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const statusBox = document.getElementById('statusBox');
+            const uploadBtn = document.getElementById('uploadBtn');
+
+            if (fileInput.files.length === 0) {
+                showStatus("Please select a file first!", "error");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Change button state
+            uploadBtn.textContent = "Uploading & Processing...";
+            uploadBtn.disabled = true;
+            uploadBtn.classList.add("opacity-70");
+            statusBox.classList.add("hidden");
+
+            try {
+                // Send file to FastAPI Backend
+                const response = await fetch("http://127.0.0.1:8000/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showStatus(`✅ Success: ${file.name} learned!`, "success");
+                    fileInput.value = ""; // Reset file input
+                    document.getElementById('fileName').textContent = "Click to Select File";
+                } else {
+                    showStatus(`❌ Error: ${result.detail || 'Upload failed'}`, "error");
+                }
+            } catch (error) {
+                showStatus(`❌ Connection Error. Is backend running?`, "error");
+                console.error("Error:", error);
+            } finally {
+                // Reset button state
+                uploadBtn.textContent = "Upload to AI";
+                uploadBtn.disabled = false;
+                uploadBtn.classList.remove("opacity-70");
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusBox = document.getElementById('statusBox');
+            statusBox.textContent = message;
+            statusBox.classList.remove("hidden", "bg-green-100", "text-green-700", "bg-red-100", "text-red-700");
+            
+            if (type === "success") {
+                statusBox.classList.add("bg-green-100", "text-green-700");
+            } else {
+                statusBox.classList.add("bg-red-100", "text-red-700");
+            }
+        }
+    </script>
+</body>
+</html>
