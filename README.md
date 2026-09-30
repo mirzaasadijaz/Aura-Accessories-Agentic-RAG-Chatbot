@@ -232,6 +232,3 @@ Browser ──► FastAPI /chat ──► LangGraph ReAct agent (Groq LLM + syst
 - If a real key was ever committed, rotate it in the Groq and Tavily dashboards.
 - Don't commit `chroma_db/` or `chat_memory.db`; they can contain private customer conversations and documents.
 
-## License
-
-Add your license here (e.g., MIT).
